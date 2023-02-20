@@ -4,7 +4,13 @@
       "email": "shann@gmail.com",
       "password": "$2a$10$FiSs56UgiWbFLKJkcdOqrOVXcdDJUgsePe6ZdGr5mnL89EYisH.Bu",
       "name": "shann",
-      "quizHistory": [],
+      "quizHistory": [
+        {
+          "testID": 1,
+          "score": 80,
+          "dateTaken": "February 16, 2023"
+        }
+      ],
       "id": 1
     }
   ],
