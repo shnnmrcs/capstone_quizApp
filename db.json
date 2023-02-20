@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "email": "shann@gmail.com",
+      "password": "$2a$10$a7DiWRobAfcz8bEAXH8p5erlENw16LlaKyGmm1zqig1FM8b8IvVS6",
+      "name": "shann",
+      "id": 1
+    }
+  ],
+  "exam": []
+}
