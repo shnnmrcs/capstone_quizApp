@@ -40,7 +40,7 @@ export function* register({ payload, meta, actions }) {
     const res = yield call(axiosInstance, {
       method: 'POST',
       url: 'register',
-      data: rest,
+      data: {...rest, quizHistory: []},
     });
     yield put({
       type: 'REGISTER_SUCCESS',

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import Errors from '../../components/Errors';
@@ -11,9 +11,7 @@ function MainLayout({ user, userInitialState }) {
 
   return (
     <>
-      <div className="container">
-        <Outlet />
-      </div>
+      <Outlet />
       <Errors />
     </>
   );
@@ -30,7 +28,7 @@ MainLayout.defaultProps = {
 
 const mapStateToProps = ({ user: { user, userInitialState } }) => ({
   user,
-  userInitialState
+  userInitialState,
 });
 
 export default connect(mapStateToProps)(MainLayout);

@@ -2,10 +2,149 @@
   "users": [
     {
       "email": "shann@gmail.com",
-      "password": "$2a$10$a7DiWRobAfcz8bEAXH8p5erlENw16LlaKyGmm1zqig1FM8b8IvVS6",
+      "password": "$2a$10$FiSs56UgiWbFLKJkcdOqrOVXcdDJUgsePe6ZdGr5mnL89EYisH.Bu",
       "name": "shann",
+      "quizHistory": [],
       "id": 1
     }
   ],
-  "exam": []
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Mathematics",
+      "questionsList": [
+        {
+          "type": "single",
+          "question": "What is the sum of 1 and 1",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "answer": 2,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "What is the sum of 4 and 2",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "answer": 3,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "What is the difference of 9 and 3",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "answer": 4,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "What is the product of 4 and 2",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "answer": 3,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "What is the quotient of 12 and 4",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "answer": 2,
+          "weight": 20
+        }
+      ],
+      "totalWeight": 100
+    },
+    {
+      "id": 2,
+      "name": "Basic English",
+      "questionsList": [
+        {
+          "type": "multiple",
+          "question": "I spoke to ____.",
+          "options": [
+            "He",
+            "Him",
+            "She",
+            "Her"
+          ],
+          "answer": [
+            2,
+            4
+          ],
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "She Works ____ Saturday.",
+          "options": [
+            "at",
+            "to",
+            "in",
+            "on"
+          ],
+          "answer": 4,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "How do you get to work? ____.",
+          "options": [
+            "By car",
+            "In car",
+            "By the car",
+            "On car"
+          ],
+          "answer": 1,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "Do you like classical music? ____",
+          "options": [
+            "Yes, I likes",
+            "Yes, I like",
+            "Yes, I do",
+            "Yes, I does"
+          ],
+          "answer": 3,
+          "weight": 20
+        },
+        {
+          "type": "single",
+          "question": "He ---- born in 1963 in America.",
+          "options": [
+            "had",
+            "is",
+            "was",
+            "did"
+          ],
+          "answer": 2,
+          "weight": 20
+        }
+      ],
+      "totalWeight": 100
+    }
+  ]
 }

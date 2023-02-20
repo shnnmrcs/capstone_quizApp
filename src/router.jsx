@@ -11,12 +11,14 @@ import NotFound from './pages/NotFound';
 import BaseLayout from './layouts/Baselayout';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
+import Quiz from './pages/Quiz';
 
 export default createBrowserRouter(
   createRoutesFromElements(
     <Route element={<BaseLayout />}>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
+        <Route path="/quiz" element={<Quiz />} />
       </Route>
       <Route path="auth" element={<AuthLayout />}>
         <Route index element={<Login />} />
