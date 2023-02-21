@@ -2,9 +2,8 @@
 import React from 'react';
 
 function Radio({
-  field: { name, value, onChange }, // { name, value, onChange, onBlur }
-  form: { touched, errors, setFieldValue, setFieldTouched }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-  meta,
+  field: { name, value },
+  form: { touched, errors, setFieldValue, setFieldTouched },
   label,
   className,
   options,

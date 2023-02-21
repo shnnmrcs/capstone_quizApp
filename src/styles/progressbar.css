@@ -1,0 +1,7 @@
+.progressBar {
+    @apply grid grid-cols-7 items-center gap-2;
+
+    .progress {
+        @apply col-span-6 w-full h-2 rounded-3xl;
+    }
+}

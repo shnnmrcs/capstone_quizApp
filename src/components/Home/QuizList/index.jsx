@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function QuizList({ test }) {
   return (
@@ -15,9 +16,9 @@ function QuizList({ test }) {
             <p>{test.totalWeight}</p>
           </div>
           <div>
-            <button type="button" className="btn">
+            <Link to={`/quiz/${test.id}`} className="btn">
               Take Quiz
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -34,7 +35,7 @@ QuizList.propTypes = {
           type: PropTypes.string,
           question: PropTypes.string,
           options: PropTypes.array,
-          answer: PropTypes.oneOfType([PropTypes.number, PropTypes.array]),
+          answer: PropTypes.number,
           weight: PropTypes.number,
         }),
       ).isRequired,

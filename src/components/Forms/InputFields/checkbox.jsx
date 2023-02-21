@@ -2,8 +2,8 @@
 import React from 'react';
 
 function CheckBox({
-  field: { name, value, onChange }, // { name, value, onChange, onBlur }
-  form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  field: { name, value },
+  form: { touched, errors, setFieldValue },
   meta,
   label,
   className,

@@ -21,7 +21,7 @@
       "questionsList": [
         {
           "type": "single",
-          "question": "What is the sum of 1 and 1",
+          "question": "What is the sum of 1 and 1?",
           "options": [
             "1",
             "2",
@@ -33,7 +33,7 @@
         },
         {
           "type": "single",
-          "question": "What is the sum of 4 and 2",
+          "question": "What is the sum of 4 and 2?",
           "options": [
             "4",
             "5",
@@ -45,7 +45,7 @@
         },
         {
           "type": "single",
-          "question": "What is the difference of 9 and 3",
+          "question": "What is the difference of 9 and 3?",
           "options": [
             "3",
             "4",
@@ -57,7 +57,7 @@
         },
         {
           "type": "single",
-          "question": "What is the product of 4 and 2",
+          "question": "What is the product of 4 and 2?",
           "options": [
             "4",
             "5",
@@ -69,7 +69,7 @@
         },
         {
           "type": "single",
-          "question": "What is the quotient of 12 and 4",
+          "question": "What is the quotient of 12 and 4?",
           "options": [
             "2",
             "3",
@@ -87,18 +87,13 @@
       "name": "Basic English",
       "questionsList": [
         {
-          "type": "multiple",
+          "type": "single",
           "question": "I spoke to ____.",
           "options": [
-            "He",
-            "Him",
             "She",
             "Her"
           ],
-          "answer": [
-            2,
-            4
-          ],
+          "answer": 2,
           "weight": 20
         },
         {

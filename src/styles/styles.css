@@ -3,19 +3,44 @@
 @tailwind utilities;
 
 @layer components {
+  body{
+    background-color: #EDE8E3;
+  }
+
   .container {
     @apply flex-1 mx-auto max-w-3xl px-4 sm:px-8 lg:px-10;
   }
+  .container2 {
+    @apply max-w-3xl w-full mx-auto px-4 sm:px-8 lg:px-10;
+  }
 
   .btn {
-    @apply inline-flex justify-center border border-transparent bg-indigo-600 py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2;
+    @apply inline-flex justify-center rounded-md border border-transparent bg-[#31CD63] py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-[#45C486] focus:outline-none focus:ring-2 focus:ring-[#45C486] focus:ring-offset-2 disabled:bg-slate-400 disabled:cursor-not-allowed;
+  }
+  .steps .btn{
+    @apply w-full;
   }
 
   .quizapp {
     @apply h-screen flex flex-col;
 
     .quizdata {
-      @apply grid sm:grid-cols-3 gap-2 p-4 rounded-lg
+      @apply grid sm:grid-cols-3 gap-2 p-4 rounded-lg drop-shadow-[0px_2px_5px_rgba(100,100,111,0.2)];
+    }
+
+    &__head{
+      @apply py-4;
+    }
+    &__body{
+      @apply pt-4;
     }
   }
+
+  .points{
+    @apply bg-white text-[#191D63] font-bold text-xs py-1 px-2 rounded-md;
+  }
+  .quizName{
+    @apply font-bold;
+  }
+
 }

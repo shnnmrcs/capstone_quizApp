@@ -1,7 +1,7 @@
 import { all, fork, put, call, takeEvery } from 'redux-saga/effects';
 import axiosInstance from '../utils/axiosInstance';
 
-export function* loadTests({ payload, meta, actions }) {
+export function* loadTests({ payload, meta }) {
   try {
     const res = yield call(axiosInstance, payload);
     yield put({
