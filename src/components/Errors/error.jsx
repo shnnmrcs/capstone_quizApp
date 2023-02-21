@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
 function Error({ bottomGap, err }) {
   const { message, title } = err;
   const [show, setShow] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
   const uniqueKey = new Date().getTime();
 
-  // Component did
   useEffect(() => {
-    const time = setTimeout(() => {
-      // After 3 seconds set the show value to false
+    const timeShow = setTimeout(() => {
+      // After 4 seconds set the show value to false
       setShow(false);
-    }, 3000);
+    }, 4000);
 
     return () => {
-      clearTimeout(time);
+      clearTimeout(timeShow);
+    };
+  }, []);
+
+  useEffect(() => {
+    const timeFadeOut = setTimeout(() => {
+      // After 3.1 seconds set the fadeOut value to false
+      setFadeOut(true);
+    }, 3100);
+
+    return () => {
+      clearTimeout(timeFadeOut);
     };
   }, []);
 
@@ -24,7 +36,9 @@ function Error({ bottomGap, err }) {
   return (
     <div
       key={`${uniqueKey}`}
-      className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 fixed left-10 min-w-[320px]"
+      className={`bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 fixed left-10 min-w-[320px]${
+        fadeOut ? ' animate-fade' : ''
+      }`}
       role="alert"
       style={{
         bottom: bottomGap,

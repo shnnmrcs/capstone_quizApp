@@ -6,12 +6,24 @@ export default (state = errorInitialState, { type, payload, meta }) => {
   if (!match) return state;
 
   const [, actionType, actionName] = match;
+
+  const title = type
+    .split('_')
+    .map((x, i) => {
+      if (i === 0) {
+        return `${x[0].toUpperCase()}${x.slice(1).toLocaleLowerCase()}`;
+      }
+      return x.toLocaleLowerCase();
+    })
+    .join(' ');
+
   if (actionName === 'FAIL') {
     return [
       ...state,
       {
         action: actionType,
-        ...payload,
+        message: payload.message,
+        title,
         ...meta,
       },
     ];

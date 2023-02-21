@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import Error from './error';
 
 function Errors({ errors }) {
-  if (errors){
-    return '';
-  }
   return (
     <div className="">
       {errors.map((x, i) => (
