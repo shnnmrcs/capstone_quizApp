@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
-import AuthForms from '../../../components/Forms/AuthForms';
+import AuthForm from '../../../components/Forms/AuthForm';
 import { registerFields, registerInitialValues } from './registerFields';
 
 function Register({ register, registerSuccess }) {
@@ -15,7 +15,7 @@ function Register({ register, registerSuccess }) {
         Register an account
       </h2>
       <div className="auth-form">
-        <AuthForms
+        <AuthForm
           initialValues={registerInitialValues}
           onSubmit={register}
           fields={registerFields}

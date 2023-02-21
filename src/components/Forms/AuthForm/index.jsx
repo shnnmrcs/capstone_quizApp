@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 
-function CustomForm({ fields, btnText, children, ...props }) {
+function AuthForm({ fields, btnText, children, ...props }) {
   return (
     <Formik {...props}>
       {({ isValid, dirty, isSubmitting, errors }) => (
@@ -39,4 +39,4 @@ function CustomForm({ fields, btnText, children, ...props }) {
   );
 }
 
-export default CustomForm;
+export default AuthForm;
