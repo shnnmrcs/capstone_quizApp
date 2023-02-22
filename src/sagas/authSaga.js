@@ -5,7 +5,7 @@ export function* login({ payload, meta, actions }) {
   try {
     const res = yield call(axiosInstance, {
       method: 'POST',
-      url: 'login',
+      url: '/api/auth/login',
       data: payload,
     });
     yield put({
@@ -39,7 +39,7 @@ export function* register({ payload, meta, actions }) {
   try {
     const res = yield call(axiosInstance, {
       method: 'POST',
-      url: 'register',
+      url: '/api/auth/register',
       data: {...rest, quizHistory: []},
     });
     yield put({

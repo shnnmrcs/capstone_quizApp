@@ -17,5 +17,6 @@ module.exports = {
     'react/state-in-constructor': 0,
     'default-param-last': 0,
     'react/jsx-props-no-spreading': 0,
+    'import/no-import-module-exports': 0
   },
 };
