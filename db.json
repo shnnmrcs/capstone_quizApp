@@ -4,13 +4,7 @@
       "email": "shann@gmail.com",
       "password": "$2a$10$FiSs56UgiWbFLKJkcdOqrOVXcdDJUgsePe6ZdGr5mnL89EYisH.Bu",
       "name": "shann",
-      "quizHistory": [
-        {
-          "testID": 1,
-          "score": 80,
-          "dateTaken": "February 16, 2023"
-        }
-      ],
+      "quizHistory": [],
       "id": 1
     }
   ],
@@ -59,12 +53,12 @@
           "type": "single",
           "question": "What is the product of 4 and 2?",
           "options": [
-            "4",
             "5",
             "6",
-            "7"
+            "7",
+            "8"
           ],
-          "answer": 3,
+          "answer": 4,
           "weight": 20
         },
         {

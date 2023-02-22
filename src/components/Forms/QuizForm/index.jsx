@@ -6,7 +6,7 @@ import QuizStep from '../../QuizStep';
 import Question from './question';
 import Result from './result';
 
-function QuizForm({ questionsList, submitQuiz, testID }) {
+function QuizForm({ questionsList, submitQuiz, testID, user }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState(new Array(questionsList.length).fill(null));
   const [progress, setProgress] = useState(0);
@@ -81,6 +81,7 @@ function QuizForm({ questionsList, submitQuiz, testID }) {
                   submitQuiz={submitQuiz}
                   questionsList={questionsList}
                   testID={testID}
+                  user={user}
                 />
               </div>
             ) : (
@@ -109,6 +110,18 @@ QuizForm.propTypes = {
   ).isRequired,
   submitQuiz: PropTypes.func.isRequired,
   testID: PropTypes.number.isRequired,
+  user: PropTypes.exact({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    name: PropTypes.string,
+    quizHistory: PropTypes.arrayOf(
+      PropTypes.exact({
+        testID: PropTypes.number,
+        score: PropTypes.number,
+        dateTaken: PropTypes.string,
+      }),
+    ),
+  }).isRequired,
 };
 
 export default QuizForm;

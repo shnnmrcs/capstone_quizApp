@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function HistoryList({ test, testName }) {
   return (
-    <div className="quiz-history-list">
+    <div className="quiz-history-list mb-5">
       <div className="quizdata bg-orange-200">
         <div>
           <h3 className="font-bold">Test Name:</h3>

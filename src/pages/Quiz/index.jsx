@@ -6,7 +6,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 // import QuizComponent from '../../components/QuizComponent';
 import QuizForm from '../../components/Forms/QuizForm';
 
-function Quiz({ tests, submitQuiz }) {
+function Quiz({ tests, submitQuiz, user }) {
   const { id } = useParams();
   const [quiz, setQuiz] = useState(null);
 
@@ -17,7 +17,7 @@ function Quiz({ tests, submitQuiz }) {
   if (tests.length && tests.length < Number(id))
     return <Navigate to="/" replace />;
 
-  if (!quiz) return 'Loading...';
+  if (!quiz || !user) return <h1>Loading...</h1>;
 
   return (
     <div className="quizapp">
@@ -42,6 +42,7 @@ function Quiz({ tests, submitQuiz }) {
             questionsList={quiz.questionsList}
             submitQuiz={submitQuiz}
             testID={quiz.id}
+            user={user}
           />
         </div>
       </section>
@@ -67,18 +68,38 @@ Quiz.propTypes = {
     }),
   ).isRequired,
   submitQuiz: PropTypes.func.isRequired,
+  user: PropTypes.exact({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    name: PropTypes.string,
+    quizHistory: PropTypes.arrayOf(
+      PropTypes.exact({
+        testID: PropTypes.number,
+        score: PropTypes.number,
+        dateTaken: PropTypes.string,
+      }),
+    ),
+  }),
 };
 
-const mapStateToProps = ({ tests }) => ({
+Quiz.defaultProps = {
+  user: null,
+};
+
+const mapStateToProps = ({ tests, user: { user } }) => ({
   tests,
+  user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitQuiz: (data, questionsList, testID) =>
+  submitQuiz: (data, questionsList, testID, user) =>
     dispatch({
       type: 'SUBMIT_QUIZ_REQUEST',
       payload: {
-        data, questionsList, testID
+        data,
+        questionsList,
+        testID,
+        user,
       },
       meta: {
         loadingId: -1,

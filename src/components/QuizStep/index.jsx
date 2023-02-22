@@ -11,6 +11,7 @@ function QuizStep({
   questionsList,
   submitQuiz,
   testID,
+  user,
 }) {
   return (
     <>
@@ -40,7 +41,7 @@ function QuizStep({
           className="btn"
           onClick={() => {
             handleSubmit();
-            submitQuiz(data, questionsList, testID);
+            submitQuiz(data, questionsList, testID, user);
           }}
           disabled={step + 1 !== questionsSize}
         >
@@ -60,6 +61,18 @@ QuizStep.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   submitQuiz: PropTypes.func.isRequired,
   testID: PropTypes.number.isRequired,
+  user: PropTypes.exact({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    name: PropTypes.string,
+    quizHistory: PropTypes.arrayOf(
+      PropTypes.exact({
+        testID: PropTypes.number,
+        score: PropTypes.number,
+        dateTaken: PropTypes.string,
+      }),
+    ),
+  }).isRequired,
   questionsList: PropTypes.arrayOf(
     PropTypes.exact({
       type: PropTypes.string,

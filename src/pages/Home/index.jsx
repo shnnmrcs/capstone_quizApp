@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,7 +8,7 @@ import QuizList from '../../components/Home/QuizList';
 function Home({ tests, loading, user, logout }) {
 
   if (!user || loading) {
-    return <h1 data-testid="loading">Loading...</h1>;
+    return <h1>Loading...</h1>;
   }
 
   return (
@@ -35,14 +36,14 @@ function Home({ tests, loading, user, logout }) {
           </div>
           <div className="quiz-history">
             <h2 className="text-xl mb-2">History</h2>
-            {user && tests.length > 0
-              ? user.quizHistory.map(test => {
+            {tests.length > 0 && user.quizHistory.length > 0
+              ? user.quizHistory.map((test,i) => {
                   const testName = tests.find(
                     element => element.id === test.testID,
                   );
                   return (
                     <HistoryList
-                      key={test.testID}
+                      key={i}
                       test={test}
                       testName={testName.name}
                     />
