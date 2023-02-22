@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function Result({ quiz }) {
-  console.log(quiz);
+  
   return (
     <div>
       <div className='grid grid-cols-6 gap-3 bg-white py-4 px-8 rounded-t-lg border-b-2'>
@@ -27,7 +27,7 @@ Result.propTypes = {
     correct: PropTypes.number,
     testID: PropTypes.string,
     dateTaken: PropTypes.string,
-    userID: PropTypes.number,
+    userID: PropTypes.string,
   }).isRequired,
 };
 

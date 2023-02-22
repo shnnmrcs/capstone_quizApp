@@ -121,6 +121,7 @@ QuizForm.propTypes = {
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
+        _id: PropTypes.string,
         testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,

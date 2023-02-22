@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { all, fork, put, call, takeEvery } from 'redux-saga/effects';
 import axiosInstance from '../utils/axiosInstance';
 
@@ -23,14 +24,14 @@ export function* submitQuiz({ payload, meta }) {
       ...result,
       testID,
       dateTaken,
-      userID: user.id,
+      userID: user._id,
     },
     meta,
   });
   try {
-    const res = yield call(axiosInstance, {
+    yield call(axiosInstance, {
       method: 'PATCH',
-      url: `users/${user.id}`,
+      url: `/api/users/update/${user._id}`,
       data: {
         quizHistory: [
           ...user.quizHistory,
@@ -42,12 +43,28 @@ export function* submitQuiz({ payload, meta }) {
         ],
       },
     });
+    
     const token = localStorage.getItem('token');
     const JSONToken = JSON.parse(token);
+    const updatedUser = {
+      ...user,
+      quizHistory: [
+        ...user.quizHistory,
+        {
+          testID,
+          score: result.score,
+          dateTaken,
+        },
+      ],
+    };
+
     yield put({
       type: 'SAVE_QUIZ_HISTORY_SUCCESS',
-      payload: res,
-      meta: { ...meta, JSONToken },
+      payload: updatedUser,
+      meta: {
+        ...meta,
+        JSONToken,
+      },
     });
   } catch (error) {
     yield put({

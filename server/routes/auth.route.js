@@ -16,7 +16,7 @@ dotenv.config();
 
 authRoutes.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, quizHistory } = req.body;
     if (!name && !email && !password) {
       return res.status(401).send('Please provide all parameters');
     }
@@ -24,6 +24,7 @@ authRoutes.post('/register', async (req, res) => {
       name,
       email,
       password,
+      quizHistory
     });
     if (user) {
       const salt = bcrypt.genSaltSync(10);
@@ -64,12 +65,12 @@ authRoutes.post('/login', async (req, res) => {
           expiresIn: '24h',
         },
       );
-      res.json({ accessToken, user: { name: user.name, email: user.email, _id: user._id} });
+      res.json({ accessToken, user: { name: user.name, email: user.email, quizHistory: user.quizHistory, _id: user._id} });
     } else {
       res.status(401).send('Invalid password');
     }
   } catch (error) {
-    res.status(401).send(error);
+    res.status(401).send(error.message);
   }
 });
 

@@ -2,24 +2,19 @@ import express from 'express';
 
 const usersRouter = express.Router();
 
-usersRouter.get('/getAll', (req, res) => {
-  res.send('user route');
-});
+const User = require('../models/user.model');
 
-usersRouter.get('/getOne/:id', (req, res) => {
-  res.send('user route - get one');
-});
-
-usersRouter.post('/add', (req, res) => {
-  res.send('user info');
-});
-
-usersRouter.put('/update/:id', (req, res) => {
-  res.send('user info');
-});
-
-usersRouter.delete('/delete/:id', (req, res) => {
-  res.send('user info');
+usersRouter.patch('/update/:_id', async (req, res) => {
+  try {
+    const { quizHistory } = req.body;
+    const { _id } = req.params;
+    const user = await User.findByIdAndUpdate(_id, {$set:{ quizHistory }});
+    res.json({
+      user,
+    });
+  } catch (error) {
+    res.status(401).send(error.message);
+  }
 });
 
 export default usersRouter;

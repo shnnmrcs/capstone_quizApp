@@ -7,7 +7,7 @@ import HistoryList from '../../components/Home/HistoryList';
 import QuizList from '../../components/Home/QuizList';
 
 function Home({ tests, loading, user, logout }) {
-  if (!user || loading) {
+  if (!user || loading || !tests) {
     return <h1>Loading...</h1>;
   }
 
@@ -36,7 +36,7 @@ function Home({ tests, loading, user, logout }) {
           </div>
           <div className="quiz-history">
             <h2 className="text-xl mb-2">History</h2>
-            {/* {tests.length > 0 && user.quizHistory.length > 0
+            {tests.length > 0 && user.quizHistory.length > 0
               ? user.quizHistory.map(test => {
                   const testName = tests.find(
                     element => element._id === test.testID,
@@ -49,7 +49,7 @@ function Home({ tests, loading, user, logout }) {
                     />
                   );
                 })
-              : 'No history available...'} */}
+              : 'No history available...'}
           </div>
         </div>
       </section>
@@ -81,6 +81,7 @@ Home.propTypes = {
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
+        _id: PropTypes.string,
         testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,
