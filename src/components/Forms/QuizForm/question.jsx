@@ -28,6 +28,7 @@ Question.propTypes = {
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   setData: PropTypes.func.isRequired,
   question: PropTypes.exact({
+    _id: PropTypes.string,
     type: PropTypes.string,
     question: PropTypes.string,
     options: PropTypes.array,

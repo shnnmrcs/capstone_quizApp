@@ -47,7 +47,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'LOAD_TESTS_REQUEST',
       payload: {
-        url: '660/tests',
+        url: 'api/tests/getAll',
         method: 'get',
       },
       meta: { loadingId: -1 },

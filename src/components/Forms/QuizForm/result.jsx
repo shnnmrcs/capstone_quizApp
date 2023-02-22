@@ -22,9 +22,10 @@ function Result({ quiz }) {
 
 Result.propTypes = {
   quiz: PropTypes.shape({
+    _id: PropTypes.string,
     score: PropTypes.number,
     correct: PropTypes.number,
-    testID: PropTypes.number,
+    testID: PropTypes.string,
     dateTaken: PropTypes.string,
     userID: PropTypes.number,
   }).isRequired,

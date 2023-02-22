@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle */
+// import QuizComponent from '../../components/QuizComponent';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { connect } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
-// import QuizComponent from '../../components/QuizComponent';
 import QuizForm from '../../components/Forms/QuizForm';
 
 function Quiz({ tests, submitQuiz, user }) {
@@ -11,13 +12,15 @@ function Quiz({ tests, submitQuiz, user }) {
   const [quiz, setQuiz] = useState(null);
 
   useEffect(() => {
-    setQuiz(tests.find(test => test.id === Number(id)));
+    setQuiz(tests.find(test => test._id === String(id)));
   }, [tests]);
 
-  if (tests.length && tests.length < Number(id))
+  if (!tests.find(elem => elem._id === String(id)))
     return <Navigate to="/" replace />;
 
-  if (!quiz || !user) return <h1>Loading...</h1>;
+  if (!quiz) return <h1>Loading Quiz...</h1>;
+
+  if (!user) return <h1>Loading User...</h1>;
 
   return (
     <div className="quizapp">
@@ -41,7 +44,7 @@ function Quiz({ tests, submitQuiz, user }) {
           <QuizForm
             questionsList={quiz.questionsList}
             submitQuiz={submitQuiz}
-            testID={quiz.id}
+            testID={quiz._id}
             user={user}
           />
         </div>
@@ -53,10 +56,11 @@ function Quiz({ tests, submitQuiz, user }) {
 Quiz.propTypes = {
   tests: PropTypes.arrayOf(
     PropTypes.exact({
-      id: PropTypes.number.isRequired,
+      _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       questionsList: PropTypes.arrayOf(
         PropTypes.exact({
+          _id: PropTypes.string,
           type: PropTypes.string,
           question: PropTypes.string,
           options: PropTypes.array,
@@ -69,12 +73,12 @@ Quiz.propTypes = {
   ).isRequired,
   submitQuiz: PropTypes.func.isRequired,
   user: PropTypes.exact({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
-        testID: PropTypes.number,
+        testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,
       }),

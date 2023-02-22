@@ -64,7 +64,7 @@ authRoutes.post('/login', async (req, res) => {
           expiresIn: '24h',
         },
       );
-      res.json({ accessToken, user });
+      res.json({ accessToken, user: { name: user.name, email: user.email, _id: user._id} });
     } else {
       res.status(401).send('Invalid password');
     }

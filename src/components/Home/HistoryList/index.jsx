@@ -24,7 +24,7 @@ function HistoryList({ test, testName }) {
 
 HistoryList.propTypes = {
   test: PropTypes.exact({
-    testID: PropTypes.number,
+    testID: PropTypes.string,
     score: PropTypes.number,
     dateTaken: PropTypes.string,
   }).isRequired,

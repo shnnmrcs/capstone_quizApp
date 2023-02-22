@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,7 @@ function QuizList({ test }) {
             <p>{test.totalWeight}</p>
           </div>
           <div>
-            <Link to={`/quiz/${test.id}`} className="btn">
+            <Link to={`/quiz/${test._id}`} className="btn">
               Take Quiz
             </Link>
           </div>
@@ -28,10 +29,11 @@ function QuizList({ test }) {
 
 QuizList.propTypes = {
     test: PropTypes.exact({
-      id: PropTypes.number.isRequired,
+      _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       questionsList: PropTypes.arrayOf(
         PropTypes.exact({
+          _id: PropTypes.string,
           type: PropTypes.string,
           question: PropTypes.string,
           options: PropTypes.array,

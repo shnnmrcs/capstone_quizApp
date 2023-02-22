@@ -60,14 +60,14 @@ QuizStep.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   submitQuiz: PropTypes.func.isRequired,
-  testID: PropTypes.number.isRequired,
+  testID: PropTypes.string.isRequired,
   user: PropTypes.exact({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
-        testID: PropTypes.number,
+        testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,
       }),
@@ -75,6 +75,7 @@ QuizStep.propTypes = {
   }).isRequired,
   questionsList: PropTypes.arrayOf(
     PropTypes.exact({
+      _id: PropTypes.string,
       type: PropTypes.string,
       question: PropTypes.string,
       options: PropTypes.array,

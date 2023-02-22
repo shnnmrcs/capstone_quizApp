@@ -11,7 +11,7 @@ export function* login({ payload, meta, actions }) {
     yield put({
       type: 'LOGIN_SUCCESS',
       payload: res,
-      meta: { ...meta, from: 'authsaga' },
+      meta: { ...meta },
     });
   } catch (error) {
     yield put({
@@ -45,7 +45,7 @@ export function* register({ payload, meta, actions }) {
     yield put({
       type: 'REGISTER_SUCCESS',
       payload: res,
-      meta: { ...meta, registerSuccess: true, from: 'authsaga' },
+      meta: { ...meta, registerSuccess: true },
     });
     actions.resetForm();
     console.log('register successful', res);
@@ -97,7 +97,7 @@ export function* resetPassword({ payload, meta, actions }) {
       yield put({
         type: 'PASSWORD_RESET_SUCCESS',
         payload,
-        meta: { ...meta, resetPasswordSuccess: true, from: 'authsaga' },
+        meta: { ...meta, resetPasswordSuccess: true },
       });
       console.log('password reset successful');
       actions.resetForm();
@@ -129,10 +129,6 @@ function* registerRequest() {
   yield takeLatest('REGISTER_REQUEST', register);
 }
 
-function* resetPasswordRequest() {
-  yield takeLatest('PASSWORD_RESET_REQUEST', resetPassword);
-}
-
 export default function* rootAuthSaga() {
-  yield all([fork(loginRequest), fork(registerRequest), fork(resetPasswordRequest)]);
+  yield all([fork(loginRequest), fork(registerRequest)]);
 }

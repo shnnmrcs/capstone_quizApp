@@ -105,6 +105,7 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
 QuizForm.propTypes = {
   questionsList: PropTypes.arrayOf(
     PropTypes.exact({
+      _id: PropTypes.string,
       type: PropTypes.string,
       question: PropTypes.string,
       options: PropTypes.array,
@@ -113,14 +114,14 @@ QuizForm.propTypes = {
     }),
   ).isRequired,
   submitQuiz: PropTypes.func.isRequired,
-  testID: PropTypes.number.isRequired,
+  testID: PropTypes.string.isRequired,
   user: PropTypes.exact({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
-        testID: PropTypes.number,
+        testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,
       }),

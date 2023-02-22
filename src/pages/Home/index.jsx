@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -6,10 +7,11 @@ import HistoryList from '../../components/Home/HistoryList';
 import QuizList from '../../components/Home/QuizList';
 
 function Home({ tests, loading, user, logout }) {
-
   if (!user || loading) {
     return <h1>Loading...</h1>;
   }
+
+  console.log(tests);
 
   return (
     <div className="quizapp">
@@ -29,31 +31,28 @@ function Home({ tests, loading, user, logout }) {
           <div className="quiz-list mb-5">
             <h2 className="text-xl mb-2">Quiz</h2>
             {tests.length > 0
-              ? tests.map(test => (
-                  <QuizList key={test.id} test={test} />
-                ))
+              ? tests.map(test => <QuizList key={test._id} test={test} />)
               : 'No test available...'}
           </div>
           <div className="quiz-history">
             <h2 className="text-xl mb-2">History</h2>
-            {tests.length > 0 && user.quizHistory.length > 0
-              ? user.quizHistory.map((test,i) => {
+            {/* {tests.length > 0 && user.quizHistory.length > 0
+              ? user.quizHistory.map(test => {
                   const testName = tests.find(
-                    element => element.id === test.testID,
+                    element => element._id === test.testID,
                   );
                   return (
                     <HistoryList
-                      key={i}
+                      key={test._id}
                       test={test}
                       testName={testName.name}
                     />
                   );
                 })
-              : 'No history available...'}
+              : 'No history available...'} */}
           </div>
         </div>
       </section>
-
     </div>
   );
 }
@@ -61,8 +60,8 @@ function Home({ tests, loading, user, logout }) {
 Home.propTypes = {
   tests: PropTypes.arrayOf(
     PropTypes.exact({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
+      _id: PropTypes.string,
+      name: PropTypes.string,
       questionsList: PropTypes.arrayOf(
         PropTypes.exact({
           type: PropTypes.string,
@@ -70,18 +69,19 @@ Home.propTypes = {
           options: PropTypes.array,
           answer: PropTypes.number,
           weight: PropTypes.number,
+          _id: PropTypes.string,
         }),
       ).isRequired,
       totalWeight: PropTypes.number.isRequired,
     }),
   ).isRequired,
   user: PropTypes.exact({
-    id: PropTypes.number,
+    _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
     quizHistory: PropTypes.arrayOf(
       PropTypes.exact({
-        testID: PropTypes.number,
+        testID: PropTypes.string,
         score: PropTypes.number,
         dateTaken: PropTypes.string,
       }),
