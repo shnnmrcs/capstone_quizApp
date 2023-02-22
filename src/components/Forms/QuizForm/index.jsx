@@ -42,20 +42,24 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
         </div>
       )}
 
-      <div className="flex-1 ">
-        <div className="container2">
-          {step !== questionsList.length ? (
+      {step !== questionsList.length ? (
+        <div className="flex-1">
+          <div className="container2">
             <Question
               question={questionsList[step]}
               step={step}
               data={data}
               setData={setData}
             />
-          ) : (
-            <Result />
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex-1 flex items-center">
+          <div className="container2">
+            <Result />
+          </div>
+        </div>
+      )}
 
       <div className="bg-white py-4">
         <div className="container2">
