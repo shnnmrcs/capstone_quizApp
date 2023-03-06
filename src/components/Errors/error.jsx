@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 
-function Error({ bottomGap, err }) {
+function Error({ bottomGap, err, updateError, index }) {
   const { message, title } = err;
   const [show, setShow] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -12,10 +11,15 @@ function Error({ bottomGap, err }) {
     const timeShow = setTimeout(() => {
       // After 4 seconds set the show value to false
       setShow(false);
-    }, 4000);
+    }, 5000);
+
+    const remove = setTimeout(() => {
+      updateError({ index, err });
+    }, 5300);
 
     return () => {
       clearTimeout(timeShow);
+      clearTimeout(remove);
     };
   }, []);
 
@@ -23,7 +27,7 @@ function Error({ bottomGap, err }) {
     const timeFadeOut = setTimeout(() => {
       // After 3.1 seconds set the fadeOut value to false
       setFadeOut(true);
-    }, 3100);
+    }, 4100);
 
     return () => {
       clearTimeout(timeFadeOut);
@@ -58,6 +62,8 @@ Error.propTypes = {
     loadingId: PropTypes.number.isRequired,
   }).isRequired,
   bottomGap: PropTypes.number.isRequired,
+  updateError: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Error;

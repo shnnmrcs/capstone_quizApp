@@ -3,11 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Error from './error';
 
-function Errors({ errors }) {
+function Errors({ errors, updateError }) {
+
   return (
     <div className="">
+      errors
       {errors.map((x, i) => (
-        <Error key={i} bottomGap={i * 90 + 10} err={x} />
+        <Error key={i} bottomGap={i * 90 + 10} err={x} index={i} updateError={updateError} />
       ))}
     </div>
   );
@@ -22,6 +24,7 @@ Errors.propTypes = {
       loadingId: PropTypes.number.isRequired,
     }),
   ).isRequired,
+  updateError: PropTypes.func.isRequired,
 };
 
 export default Errors;
