@@ -10,18 +10,13 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState(new Array(questionsList.length).fill(null));
   const [progress, setProgress] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleNextSteps = useCallback(() => {
-    setStep(x => x + 1);
-  }, []);
-  const handlePrevSteps = useCallback(() => {
-    setStep(x => x - 1);
-  }, []);
+  const handleNextSteps = useCallback(() => setStep(x => x + 1), []);
+  const handlePrevSteps = useCallback(() => setStep(x => x - 1), []);
 
   const handleSubmit = () => {
     setStep(x => x + 1);
-    setIsSubmitted(true);
+    submitQuiz(data, questionsList, testID, user);
   };
 
   useEffect(() => {
@@ -46,7 +41,8 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
         <div className="flex-1">
           <div className="container2">
             <Question
-              question={questionsList[step]}
+              question={questionsList[step].question}
+              options={questionsList[step].options}
               step={step}
               data={data}
               setData={setData}
@@ -73,19 +69,15 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
                 />
               </div>
             )}
-            {!isSubmitted ? (
+            {step !== questionsList.length ? (
               <div className="flex gap-2 w-full sm:w-min steps">
                 <QuizStep
                   step={step}
                   data={data}
                   handlePrevSteps={handlePrevSteps}
                   handleNextSteps={handleNextSteps}
-                  questionsSize={questionsList.length}
                   handleSubmit={handleSubmit}
-                  submitQuiz={submitQuiz}
-                  questionsList={questionsList}
-                  testID={testID}
-                  user={user}
+                  questionsSize={questionsList.length}
                 />
               </div>
             ) : (

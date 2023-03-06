@@ -13,8 +13,6 @@ export function* apiAuthRequestSaga({ type, payload, meta }) {
       data: actionName === 'REGISTER' ? registerData : payload.data,
     });
 
-    console.log(res)
-
     yield put({
       type: `${actionName}_SUCCESS`,
       payload: res,

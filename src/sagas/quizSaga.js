@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { all, fork, put, call, takeEvery } from 'redux-saga/effects';
+import { all, fork, put, call, takeLatest } from 'redux-saga/effects';
 import axiosInstance from '../utils/axiosInstance';
 
 export function* submitQuiz({ payload, meta }) {
@@ -18,6 +18,18 @@ export function* submitQuiz({ payload, meta }) {
     },
     { score: 0, correct: 0 },
   );
+  const updatedUser = {
+    ...user,
+    quizHistory: [
+      ...user.quizHistory,
+      {
+        testID,
+        score: result.score,
+        dateTaken,
+      },
+    ],
+  };
+
   yield put({
     type: 'SUBMIT_QUIZ_SUCCESS',
     payload: {
@@ -28,6 +40,7 @@ export function* submitQuiz({ payload, meta }) {
     },
     meta,
   });
+
   try {
     yield call(axiosInstance, {
       method: 'PATCH',
@@ -43,28 +56,11 @@ export function* submitQuiz({ payload, meta }) {
         ],
       },
     });
-    
-    const token = localStorage.getItem('token');
-    const JSONToken = JSON.parse(token);
-    const updatedUser = {
-      ...user,
-      quizHistory: [
-        ...user.quizHistory,
-        {
-          testID,
-          score: result.score,
-          dateTaken,
-        },
-      ],
-    };
 
     yield put({
       type: 'SAVE_QUIZ_HISTORY_SUCCESS',
       payload: updatedUser,
-      meta: {
-        ...meta,
-        JSONToken,
-      },
+      meta,
     });
   } catch (error) {
     yield put({
@@ -76,7 +72,7 @@ export function* submitQuiz({ payload, meta }) {
 }
 
 function* submitQuizRequest() {
-  yield takeEvery('SUBMIT_QUIZ_REQUEST', submitQuiz);
+  yield takeLatest('SUBMIT_QUIZ_REQUEST', submitQuiz);
 }
 
 export default function* rootQuizSaga() {

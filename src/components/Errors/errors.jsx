@@ -7,7 +7,6 @@ function Errors({ errors, updateError }) {
 
   return (
     <div className="">
-      errors
       {errors.map((x, i) => (
         <Error key={i} bottomGap={i * 90 + 10} err={x} index={i} updateError={updateError} />
       ))}

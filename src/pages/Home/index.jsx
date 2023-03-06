@@ -7,11 +7,9 @@ import HistoryList from '../../components/Home/HistoryList';
 import QuizList from '../../components/Home/QuizList';
 
 function Home({ tests, loading, user, logout }) {
-  if (!user || loading || !tests) {
+  if (loading || !user || !tests) {
     return <h1>Loading...</h1>;
   }
-
-  console.log(tests);
 
   return (
     <div className="quizapp">
@@ -37,14 +35,14 @@ function Home({ tests, loading, user, logout }) {
           <div className="quiz-history">
             <h2 className="text-xl mb-2">History</h2>
             {tests.length > 0 && user.quizHistory.length > 0
-              ? user.quizHistory.map(test => {
+              ? user.quizHistory.map((userTest, i) => {
                   const testName = tests.find(
-                    element => element._id === test.testID,
+                    elem => elem._id === userTest.testID,
                   );
                   return (
                     <HistoryList
-                      key={test._id}
-                      test={test}
+                      key={i}
+                      test={userTest}
                       testName={testName.name}
                     />
                   );
