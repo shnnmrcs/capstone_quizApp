@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import ErrorBoundary from '../../ErrorBoundary';
 
 function BaseLayout({ checkLogin }) {
-  
+
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);

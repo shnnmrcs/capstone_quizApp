@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import AuthForm from '../../../components/Forms/AuthForm';
 import { loginFields, loginInitialValues } from './loginFields';
 
-function Login({ login }) {
+function Login({ apiAuthRequestSaga }) {
   return (
     <>
       <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -22,7 +22,7 @@ function Login({ login }) {
       <div className="auth-form">
         <AuthForm
           initialValues={loginInitialValues}
-          onSubmit={login}
+          onSubmit={apiAuthRequestSaga}
           fields={loginFields}
           btnText="Sign in"
         />
@@ -32,14 +32,14 @@ function Login({ login }) {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  apiAuthRequestSaga: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-  login: (values, actions) =>
+  apiAuthRequestSaga: (values, actions) =>
     dispatch({
       type: 'LOGIN_REQUEST',
-      payload: values,
+      payload: { data: values, method: 'POST', url: '/api/auth/login' },
       meta: {
         loadingId: -1,
       },

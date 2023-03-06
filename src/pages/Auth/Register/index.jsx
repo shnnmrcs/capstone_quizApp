@@ -5,10 +5,21 @@ import { Navigate } from 'react-router-dom';
 import AuthForm from '../../../components/Forms/AuthForm';
 import { registerFields, registerInitialValues } from './registerFields';
 
-function Register({ register, registerSuccess }) {
+function Register({ apiAuthRequestSaga, registerSuccess }) {
   if (registerSuccess === true) {
     return <Navigate to="/auth" />;
   }
+
+  const validateRegister = values => {
+    const errors = {};
+
+    if (values.password !== values.confirmPassword) {
+      errors.serverError = 'Password does not match.';
+    }
+
+    return errors;
+  };
+
   return (
     <>
       <h2 className="my-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -17,8 +28,9 @@ function Register({ register, registerSuccess }) {
       <div className="auth-form">
         <AuthForm
           initialValues={registerInitialValues}
-          onSubmit={register}
+          onSubmit={apiAuthRequestSaga}
           fields={registerFields}
+          validate={validateRegister}
           btnText="Register"
         />
       </div>
@@ -27,7 +39,7 @@ function Register({ register, registerSuccess }) {
 }
 
 Register.propTypes = {
-  register: PropTypes.func.isRequired,
+  apiAuthRequestSaga: PropTypes.func.isRequired,
   registerSuccess: PropTypes.bool,
 };
 
@@ -40,14 +52,14 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (values, actions) =>
+  apiAuthRequestSaga: (values, actions) =>
     dispatch({
       type: 'REGISTER_REQUEST',
-      payload: values,
+      payload: { data: values, method: 'POST', url: '/api/auth/register' },
       meta: {
         loadingId: -1,
       },
-      actions
+      actions,
     }),
 });
 

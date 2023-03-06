@@ -2,17 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Navigate, Outlet } from 'react-router-dom';
+import Errors from '../../components/Errors';
 
 function AuthLayout({ user, userInitialState }) {
   if (user && userInitialState === false) {
     return <Navigate to="/" replace />;
   }
   return (
-    <div className="container flex min-h-screen items-center justify-center py-4 sm:py-6 lg:py-8">
-      <div className="w-full max-w-md space-y-8">
-        <Outlet />
+    <>
+      <div className="container flex min-h-screen items-center justify-center py-4 sm:py-6 lg:py-8">
+        <div className="w-full max-w-md space-y-8">
+          <Outlet />
+        </div>
       </div>
-    </div>
+      <Errors />
+    </>
   );
 }
 
@@ -27,7 +31,7 @@ AuthLayout.defaultProps = {
 
 const mapStateToProps = ({ user: { user, userInitialState } }) => ({
   user,
-  userInitialState
+  userInitialState,
 });
 
 export default connect(mapStateToProps)(AuthLayout);

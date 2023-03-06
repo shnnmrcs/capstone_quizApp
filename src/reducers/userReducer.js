@@ -18,9 +18,6 @@ export const userReducer = (state = initialState, { type, payload, meta }) => {
     case 'REGISTER_SUCCESS':
       return { ...state, registerSuccess: meta.registerSuccess };
 
-    case 'PASSWORD_RESET_SUCCESS':
-      return { ...state, resetPasswordSuccess: meta.resetPasswordSuccess };
-
     case 'SAVE_QUIZ_HISTORY_SUCCESS':
       localStorage.setItem('token', JSON.stringify({accessToken: meta.JSONToken.accessToken, payload}));
       return { accessToken: meta.JSONToken.accessToken, user: payload };
