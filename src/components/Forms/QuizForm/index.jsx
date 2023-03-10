@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProgressBar from '../../ProgressBar';
@@ -120,4 +120,4 @@ QuizForm.propTypes = {
   submitQuiz: PropTypes.func.isRequired,
 };
 
-export default QuizForm;
+export default memo(QuizForm);

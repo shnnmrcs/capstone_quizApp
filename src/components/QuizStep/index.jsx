@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 function QuizStep({
@@ -9,7 +9,9 @@ function QuizStep({
   data,
   questionsSize,
 }) {
+
   return (
+
     <>
       {step !== 0 && (
         <button
@@ -53,7 +55,7 @@ QuizStep.propTypes = {
   handlePrevSteps: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
-  questionsSize: PropTypes.number.isRequired
+  questionsSize: PropTypes.number.isRequired,
 };
 
-export default QuizStep;
+export default memo(QuizStep);

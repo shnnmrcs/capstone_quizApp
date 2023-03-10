@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/progressbar.css'
 
@@ -24,4 +24,4 @@ ProgressBar.propTypes = {
   propClass: PropTypes.string.isRequired,
 };
 
-export default ProgressBar;
+export default memo(ProgressBar);
