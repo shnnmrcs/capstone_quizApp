@@ -72,38 +72,26 @@ import axiosInstance from '../utils/axiosInstance';
 // }
 
 export function* submitQuiz({ payload, meta }) {
-  console.log('submitQuiz', payload, meta);
-
   const { data, quiz, user } = payload;
   const date = new Date();
   const dateTaken = new Intl.DateTimeFormat('en-US').format(date);
-  const result = quiz.questionsList.reduce(
-    (previous, current, index) => {
-      if (current.answer === data[index]) {
-        const score = current.weight + previous.score;
-        const correct = previous.correct + 1;
-        return { ...previous, score, correct };
-      }
-      return previous;
-    },
-    { score: 0, correct: 0 },
-  );
 
   try {
-    yield call(axiosInstance, {
+    const res = yield call(axiosInstance, {
       method: 'POST',
       url: '/api/quiz/add',
       data: {
         testID: quiz._id,
         userID: user._id,
-        score: result.score,
         dateTaken,
+        answers: data,
+        questions: quiz.questionsList,
       },
     });
 
     yield put({
       type: 'SUBMIT_QUIZ_SUCCESS',
-      payload: result,
+      payload: res,
       meta,
     });
   } catch (error) {
