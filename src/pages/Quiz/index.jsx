@@ -1,26 +1,29 @@
 /* eslint-disable no-underscore-dangle */
-// import QuizComponent from '../../components/QuizComponent';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { connect } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import QuizForm from '../../components/Forms/QuizForm';
 
-function Quiz({ tests, submitQuiz, user }) {
+function Quiz({ quiz, submitQuiz, user, loadQuiz, errors }) {
   const { id } = useParams();
-  const [quiz, setQuiz] = useState(null);
+
+  // load data
+  const loadData = useCallback(async () => {
+    await Promise.all([loadQuiz(id)]);
+  }, [loadQuiz]);
 
   useEffect(() => {
-    setQuiz(tests.find(test => test._id === String(id)));
-  }, [tests]);
+    loadData();
+  }, [loadData]);
 
-  if (!tests.find(elem => elem._id === String(id)))
+  // redirect if there is no quiz
+  if (errors.length && errors.some(x => x.action === 'LOAD_TESTS')) {
     return <Navigate to="/" replace />;
+  }
 
-  if (!quiz) return <h1>Loading Quiz...</h1>;
-
-  if (!user) return <h1>Loading User...</h1>;
+  if (!quiz || !user) return 'Loading...';
 
   return (
     <div className="quizapp">
@@ -41,12 +44,7 @@ function Quiz({ tests, submitQuiz, user }) {
 
       <section className="quizapp__body flex-1">
         <div className="h-full flex flex-col content-center">
-          <QuizForm
-            questionsList={quiz.questionsList}
-            submitQuiz={submitQuiz}
-            testID={quiz._id}
-            user={user}
-          />
+          <QuizForm quiz={quiz} user={user} submitQuiz={submitQuiz} />
         </div>
       </section>
     </div>
@@ -54,61 +52,76 @@ function Quiz({ tests, submitQuiz, user }) {
 }
 
 Quiz.propTypes = {
-  tests: PropTypes.arrayOf(
-    PropTypes.exact({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      questionsList: PropTypes.arrayOf(
-        PropTypes.exact({
-          _id: PropTypes.string,
-          type: PropTypes.string,
-          question: PropTypes.string,
-          options: PropTypes.array,
-          answer: PropTypes.number,
-          weight: PropTypes.number,
-        }),
-      ).isRequired,
-      totalWeight: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-  submitQuiz: PropTypes.func.isRequired,
+  quiz: PropTypes.exact({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    totalWeight: PropTypes.number,
+    questionsList: PropTypes.arrayOf(
+      PropTypes.exact({
+        _id: PropTypes.string,
+        type: PropTypes.string,
+        question: PropTypes.string,
+        answer: PropTypes.number,
+        weight: PropTypes.number,
+        options: PropTypes.arrayOf(PropTypes.string),
+      }),
+    ),
+  }),
   user: PropTypes.exact({
     _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
-    quizHistory: PropTypes.arrayOf(
-      PropTypes.exact({
-        _id: PropTypes.string,
-        testID: PropTypes.string,
-        score: PropTypes.number,
-        dateTaken: PropTypes.string,
-      }),
-    ),
   }),
+  errors: PropTypes.arrayOf(
+    PropTypes.exact({
+      action: PropTypes.string,
+      title: PropTypes.string,
+      message: PropTypes.string,
+      loadingId: PropTypes.number,
+    }),
+  ).isRequired,
+  submitQuiz: PropTypes.func.isRequired,
+  loadQuiz: PropTypes.func.isRequired,
 };
 
 Quiz.defaultProps = {
   user: null,
+  quiz: null,
 };
 
-const mapStateToProps = ({ tests, user: { user } }) => ({
-  tests,
+const mapStateToProps = ({
+  quizzes: {
+    current: { quiz },
+  },
+  user: { user },
+  errors,
+}) => ({
+  quiz,
   user,
+  errors,
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitQuiz: (data, questionsList, testID, user) =>
+  submitQuiz: (data, quiz, user) =>
     dispatch({
       type: 'SUBMIT_QUIZ_REQUEST',
       payload: {
         data,
-        questionsList,
-        testID,
+        quiz,
         user,
       },
       meta: {
         loadingId: -1,
       },
+    }),
+  loadQuiz: id =>
+    dispatch({
+      type: 'LOAD_QUIZ_REQUEST',
+      payload: {
+        url: `api/tests/getOne/${id}`,
+        method: 'get',
+      },
+      meta: { loadingId: -1 },
     }),
 });
 

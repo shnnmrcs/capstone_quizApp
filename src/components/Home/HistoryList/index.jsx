@@ -28,6 +28,7 @@ HistoryList.propTypes = {
     testID: PropTypes.string,
     score: PropTypes.number,
     dateTaken: PropTypes.string,
+    userID: PropTypes.string,
   }).isRequired,
   testName: PropTypes.string.isRequired
 };

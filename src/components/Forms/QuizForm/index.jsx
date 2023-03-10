@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -6,9 +7,11 @@ import QuizStep from '../../QuizStep';
 import Question from './question';
 import Result from './result';
 
-function QuizForm({ questionsList, submitQuiz, testID, user }) {
+function QuizForm({ quiz, submitQuiz, user }) {
+  const quizSize = quiz.questionsList.length;
+
   const [step, setStep] = useState(0);
-  const [data, setData] = useState(new Array(questionsList.length).fill(null));
+  const [data, setData] = useState(new Array(quizSize).fill(null));
   const [progress, setProgress] = useState(0);
 
   const handleNextSteps = useCallback(() => setStep(x => x + 1), []);
@@ -16,33 +19,33 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
 
   const handleSubmit = () => {
     setStep(x => x + 1);
-    submitQuiz(data, questionsList, testID, user);
+    submitQuiz(data, quiz, user);
   };
 
   useEffect(() => {
-    setProgress((step / questionsList.length) * 100);
+    setProgress((step / quizSize) * 100);
   }, [step]);
 
   return (
     <>
-      {step !== questionsList.length && (
+      {step !== quizSize && (
         <div className="sm:hidden">
           <div className="mb-4 container2">
             <ProgressBar
               progress={progress}
-              progressString={`${step}/${questionsList.length}`}
+              progressString={`${step}/${quizSize}`}
               propClass="bg-white"
             />
           </div>
         </div>
       )}
 
-      {step !== questionsList.length ? (
+      {step !== quizSize ? (
         <div className="flex-1">
           <div className="container2">
             <Question
-              question={questionsList[step].question}
-              options={questionsList[step].options}
+              question={quiz.questionsList[step].question}
+              options={quiz.questionsList[step].options}
               step={step}
               data={data}
               setData={setData}
@@ -60,16 +63,16 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
       <div className="bg-white py-4">
         <div className="container2">
           <div className="flex items-center gap-4 sm:justify-between">
-            {step !== questionsList.length && (
+            {step !== quizSize && (
               <div className="hidden sm:block min-w-[300px]">
                 <ProgressBar
                   progress={progress}
-                  progressString={`${step}/${questionsList.length}`}
+                  progressString={`${step}/${quizSize}`}
                   propClass="bg-[#EDE8E3]"
                 />
               </div>
             )}
-            {step !== questionsList.length ? (
+            {step !== quizSize ? (
               <div className="flex gap-2 w-full sm:w-min steps">
                 <QuizStep
                   step={step}
@@ -77,7 +80,7 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
                   handlePrevSteps={handlePrevSteps}
                   handleNextSteps={handleNextSteps}
                   handleSubmit={handleSubmit}
-                  questionsSize={questionsList.length}
+                  questionsSize={quizSize}
                 />
               </div>
             ) : (
@@ -95,31 +98,27 @@ function QuizForm({ questionsList, submitQuiz, testID, user }) {
 }
 
 QuizForm.propTypes = {
-  questionsList: PropTypes.arrayOf(
-    PropTypes.exact({
-      _id: PropTypes.string,
-      type: PropTypes.string,
-      question: PropTypes.string,
-      options: PropTypes.array,
-      answer: PropTypes.number,
-      weight: PropTypes.number,
-    }),
-  ).isRequired,
-  submitQuiz: PropTypes.func.isRequired,
-  testID: PropTypes.string.isRequired,
+  quiz: PropTypes.exact({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    totalWeight: PropTypes.number,
+    questionsList: PropTypes.arrayOf(
+      PropTypes.exact({
+        _id: PropTypes.string,
+        type: PropTypes.string,
+        question: PropTypes.string,
+        answer: PropTypes.number,
+        weight: PropTypes.number,
+        options: PropTypes.arrayOf(PropTypes.string),
+      }),
+    ),
+  }).isRequired,
   user: PropTypes.exact({
     _id: PropTypes.string,
     email: PropTypes.string,
     name: PropTypes.string,
-    quizHistory: PropTypes.arrayOf(
-      PropTypes.exact({
-        _id: PropTypes.string,
-        testID: PropTypes.string,
-        score: PropTypes.number,
-        dateTaken: PropTypes.string,
-      }),
-    ),
   }).isRequired,
+  submitQuiz: PropTypes.func.isRequired,
 };
 
 export default QuizForm;

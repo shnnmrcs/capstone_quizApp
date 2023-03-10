@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
+import mongoose from 'mongoose';
 import verifyToken from '../middlewares/verifyToken';
 
 const testsRouter = express.Router();
@@ -30,22 +31,34 @@ testsRouter.post('/add', async (req, res) => {
 
 testsRouter.get('/getAll', verifyToken, async (req, res) => {
   try {
-    const response = await Test.find({});
+    const response = await Test.find(
+      {},
+      { name: 1, totalWeight: 1, questionsList: 1 },
+    );
     if (response) {
-      const newReponse = response.reduce((p, c) => {
-        const newObj = {
-          _id: c._id,
-          name: c.name,
-          totalWeight: c.totalWeight,
-          questionsList: c.questionsList
-        };
-        p.push(newObj);
-        return p;
-      }, []);
-      res.status(200).json(newReponse);
+      res.status(200).json(response);
+    } else {
+      res.status(404).json('No Tests Found.');
     }
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    res.status(401).json(error.message);
+  }
+});
+
+testsRouter.get('/getOne/:id', verifyToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await Test.findById(
+      { _id: id },
+      { name: 1, totalWeight: 1, questionsList: 1 },
+    );
+    if (response) {
+      res.status(200).json(response);
+    } else {
+      res.status(404).json('No Test Found.');
+    }
+  } catch (error) {
+    res.status(401).json(error.message);
   }
 });
 

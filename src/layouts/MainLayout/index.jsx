@@ -1,24 +1,17 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import Errors from '../../components/Errors';
 
-function MainLayout({ user, userInitialState, loadTests }) {
+function MainLayout({ user, userInitialState }) {
   if (!user && userInitialState === false) {
     return <Navigate to="/auth" replace />;
   }
-  const loadData = useCallback(async () => {
-    await Promise.all([loadTests()]);
-  }, [loadTests]);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
 
   return (
     <>
-      <Outlet />
+      <Outlet user={user} />
       <Errors />
     </>
   );
@@ -26,32 +19,16 @@ function MainLayout({ user, userInitialState, loadTests }) {
 
 MainLayout.propTypes = {
   user: PropTypes.shape({}),
-  userInitialState: PropTypes.bool.isRequired,
-  quiz: PropTypes.shape({}),
-  loadTests: PropTypes.func.isRequired
+  userInitialState: PropTypes.bool.isRequired
 };
 
 MainLayout.defaultProps = {
   user: null,
-  quiz: null,
 };
 
-const mapStateToProps = ({ user: { user, userInitialState }, quiz }) => ({
+const mapStateToProps = ({ user: { user, userInitialState } }) => ({
   user,
   userInitialState,
-  quiz,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadTests: () =>
-    dispatch({
-      type: 'LOAD_TESTS_REQUEST',
-      payload: {
-        url: 'api/tests/getAll',
-        method: 'get',
-      },
-      meta: { loadingId: -1 },
-    }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+export default connect(mapStateToProps)(MainLayout);

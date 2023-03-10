@@ -15,10 +15,6 @@ mongoose.connect(mongoSting);
 const db = mongoose.connection;
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('hello wold');
-});
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
