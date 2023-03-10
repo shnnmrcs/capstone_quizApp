@@ -19,7 +19,7 @@ function QuizForm({ quiz, submitQuiz, user }) {
 
   const handleSubmit = () => {
     setStep(x => x + 1);
-    submitQuiz(data, quiz, user);
+    submitQuiz(data, quiz._id, user._id);
   };
 
   useEffect(() => {
@@ -107,7 +107,6 @@ QuizForm.propTypes = {
         _id: PropTypes.string,
         type: PropTypes.string,
         question: PropTypes.string,
-        answer: PropTypes.number,
         weight: PropTypes.number,
         options: PropTypes.arrayOf(PropTypes.string),
       }),

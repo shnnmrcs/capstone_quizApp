@@ -5,15 +5,18 @@ import verifyToken from '../middlewares/verifyToken';
 const quizRouter = express.Router();
 
 const Quiz = require('../models/quiz.model');
+const Test = require('../models/test.model');
 
 quizRouter.post('/add', async (req, res) => {
   try {
-    const { testID, userID, dateTaken, answers, questions } = req.body;
+    const { testID, userID, dateTaken, answers } = req.body;
     if (!testID || !userID || !dateTaken) {
       return res.status(401).send('Please provide all parameters');
     }
 
-    const result = questions.reduce(
+    const response = await Test.findById({ _id: testID });
+
+    const result = response.questionsList.reduce(
       (previous, current, index) => {
         if (current.answer === answers[index]) {
           const score = current.weight + previous.score;

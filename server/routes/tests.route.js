@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 import express from 'express';
-import mongoose from 'mongoose';
 import verifyToken from '../middlewares/verifyToken';
 
 const testsRouter = express.Router();
@@ -50,7 +49,7 @@ testsRouter.get('/getOne/:id', verifyToken, async (req, res) => {
     const { id } = req.params;
     const response = await Test.findById(
       { _id: id },
-      { name: 1, totalWeight: 1, questionsList: 1 },
+      { questionsList: { answer: 0 }, __v: 0 },
     );
     if (response) {
       res.status(200).json(response);

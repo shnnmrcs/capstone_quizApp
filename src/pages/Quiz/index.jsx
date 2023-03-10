@@ -61,7 +61,6 @@ Quiz.propTypes = {
         _id: PropTypes.string,
         type: PropTypes.string,
         question: PropTypes.string,
-        answer: PropTypes.number,
         weight: PropTypes.number,
         options: PropTypes.arrayOf(PropTypes.string),
       }),
@@ -102,13 +101,13 @@ const mapStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  submitQuiz: (data, quiz, user) =>
+  submitQuiz: (data, testID, userID) =>
     dispatch({
       type: 'SUBMIT_QUIZ_REQUEST',
       payload: {
         data,
-        quiz,
-        user,
+        testID,
+        userID,
       },
       meta: {
         loadingId: -1,

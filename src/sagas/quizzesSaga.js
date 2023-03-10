@@ -72,7 +72,7 @@ import axiosInstance from '../utils/axiosInstance';
 // }
 
 export function* submitQuiz({ payload, meta }) {
-  const { data, quiz, user } = payload;
+  const { data, testID, userID } = payload;
   const date = new Date();
   const dateTaken = new Intl.DateTimeFormat('en-US').format(date);
 
@@ -81,11 +81,10 @@ export function* submitQuiz({ payload, meta }) {
       method: 'POST',
       url: '/api/quiz/add',
       data: {
-        testID: quiz._id,
-        userID: user._id,
+        testID,
+        userID,
         dateTaken,
         answers: data,
-        questions: quiz.questionsList,
       },
     });
 
