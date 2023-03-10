@@ -5,14 +5,7 @@ export default (state = errorInitialState, { type, payload, meta }) => {
 
   if (!match) return state;
 
-  const [action, actionType, actionName] = match;
-
-  if (action === 'UPDATE_ERROR') {
-    return [
-      ...state.slice(0, payload.index),
-      ...state.slice(payload.index + 1),
-    ];
-  }
+  const [, actionType, actionName] = match;
 
   if (actionName === 'FAIL') {
     return [
