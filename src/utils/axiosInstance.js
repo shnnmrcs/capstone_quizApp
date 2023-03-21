@@ -6,6 +6,7 @@ const axiosInstance = axios.create({
   timeoutErrorMessage: 'Request Timeout. try after sometime',
 });
 
+// update bearer config
 axiosInstance.interceptors.request.use(
   config => {
     const updatedConfig = { ...config };
@@ -19,6 +20,7 @@ axiosInstance.interceptors.request.use(
   error => Promise.reject(error),
 );
 
+// revise error message
 axiosInstance.interceptors.response.use(
   response => response.data,
   error => {
